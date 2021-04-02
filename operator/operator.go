@@ -2,7 +2,6 @@ package operator
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/julianiff/flyby-tests/job"
 )
