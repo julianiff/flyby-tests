@@ -1,41 +1,42 @@
-package jobs
+package job
 
 import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"github.com/julianiff/flyby-tests/testCase"
 )
 
-type TestCase struct {
-	Method string
+var jq chan<- Job
+
+type jobHandler struct{}
+
+func RegisterHandlers(jobQueue chan<- Job) {
+	jq = jobQueue
+	handler := new(jobHandler)
+	http.Handle("/job", handler)
 }
 
-type jobsHandler struct{}
-
-func RegisterHandlers() {
-	handler := new(jobsHandler)
-	http.Handle("/jobs", handler)
-}
-
-func (jh jobsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("im printing")
+func (jh jobHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodPost:
-		var testCases TestCase
+		var testCases []testCase.TestCase
 		err := json.NewDecoder(r.Body).Decode(&testCases)
 		if err != nil {
 			fmt.Println(err)
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
-		j, err := json.Marshal(testCases)
+		id, err := AddNewJob(testCases, jq)
 		if err != nil {
-			fmt.Println(err)
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
+
 		w.WriteHeader(http.StatusCreated)
-		w.Write(j)
+		w.Write([]byte(fmt.Sprint(id)))
+
 	default:
 		w.WriteHeader(http.StatusMethodNotAllowed)
 	}
