@@ -10,7 +10,7 @@ type TestCase struct {
 type TestCases []TestCase
 
 func (tcs TestCases) Validate() error {
-	// Add validation step to TestCases if err not nil
+	// Add validation step to TestCases to validate input
 
 	return nil
 }

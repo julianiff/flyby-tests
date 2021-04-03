@@ -5,7 +5,7 @@ import (
 )
 
 type Job struct {
-	Status    bool
+	Status    string
 	ID        int
 	TestCases []testCase.TestCase
 }

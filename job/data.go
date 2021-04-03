@@ -5,11 +5,13 @@ import (
 )
 
 func AddNewJob(tCase []testCase.TestCase, jobQueue chan<- Job) (id int, err error) {
-	job := Job{Status: false, ID: 1, TestCases: tCase}
+	// Add db connection here to get lattest ID
+	// Status is initialized with pending, we want a non-blocking behaviour
+	job := Job{Status: "pending", ID: 1, TestCases: tCase}
 
 	go func() {
 		jobQueue <- job
 	}()
 
-	return 1, nil
+	return job.ID, nil
 }
