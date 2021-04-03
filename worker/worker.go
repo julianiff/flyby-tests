@@ -1,7 +1,6 @@
 package worker
 
-
-type job interface {
+type worker struct {
 	
 }
 

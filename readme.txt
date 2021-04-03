@@ -6,10 +6,9 @@ Endpoints:
 POST: JOBS
     accepts JSON WITH TEST SPECIFICS
     [{
-        method: "GET | POST",
+        method: "GET | ",
         url: string
-
-
+        equals: string
     }]
 GET: JOBS/{ID}
 

@@ -21,13 +21,20 @@ func RegisterHandlers(jobQueue chan<- Job) {
 func (jh jobHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodPost:
-		var testCases []testCase.TestCase
+		var testCases testCase.TestCases
 		err := json.NewDecoder(r.Body).Decode(&testCases)
 		if err != nil {
 			fmt.Println(err)
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
+
+		validationErr := testCases.Validate()
+		if validationErr != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
 		id, err := AddNewJob(testCases, jq)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
