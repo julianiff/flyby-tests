@@ -22,6 +22,9 @@ func StartOperator(jobQueue <-chan job.Job) {
 				fmt.Printf("New Job received: ID: %s \n", fmt.Sprint(nextJob.ID))
 
 				for _, testCase := range nextJob.TestCases {
+
+					// Delegate the work in here to a worker
+					// now its still fine, but with more modes this can get messy
 					fmt.Println("Executing", testCase.Target)
 
 					resp, err := http.Get(testCase.Target)
