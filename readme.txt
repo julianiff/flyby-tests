@@ -21,4 +21,5 @@ The jobs accept a testCases object that has different Mode
 - COMPARE // compares request response with equals object
     - equals // represents object to compare in json
 - ruleset
+    - finite set of rules to apply to testCase
 
