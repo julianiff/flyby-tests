@@ -8,7 +8,7 @@ POST: JOBS
     [{
         method: "GET | ",
         url: string
-        mode: ENUM("COMPARE")
+        mode: ENUM("COMPARE", "SNAPSHOT")
         equals: string
     }]
 GET: JOBS/{ID}
@@ -19,5 +19,6 @@ GET: TELEMETRIE/{JOBS_ID}
 
 The jobs accept a testCases object that has different Mode
 - COMPARE // compares request response with equals object
-
+    - equals // represents object to compare in json
+- ruleset
 

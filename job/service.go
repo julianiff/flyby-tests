@@ -18,7 +18,7 @@ func RegisterHandlers(jobQueue chan<- Job) {
 	http.Handle("/job", handler)
 }
 
-func (jh jobHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (jh *jobHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodPost:
 		var testCases testCase.TestCases
